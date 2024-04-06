@@ -47,7 +47,7 @@ maildeck [ARGS]
 
 ### Help
 
-- \*\*`-h, --help`: Show the help message and exit.
+- **`-h, --help`**: Show the help message and exit.
 
 **All arguments can also be set as environment variables** with the same name as the placeholder in this help message.
 
