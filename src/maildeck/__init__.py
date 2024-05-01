@@ -37,7 +37,7 @@ class Command:
 
 def main() -> int:
     try:
-        Command(config=config.Config.from_args(sys.argv[1:]))
+        Command(config=config.Config.from_args(sys.argv[1:])).run()
     except Exception as e:
         logger.error(e)
         return 1
