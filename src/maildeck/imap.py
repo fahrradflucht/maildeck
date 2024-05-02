@@ -24,7 +24,12 @@ class Email:
 
     @property
     def subject(self) -> str:
-        return decode_header(self.message["Subject"])[0][0].decode("utf-8")
+        decoded_header = decode_header(self.message["Subject"])[0]
+        header_content, encoding = decoded_header[0], decoded_header[1]
+        if isinstance(header_content, bytes):
+            return header_content.decode(encoding if encoding else "utf-8")
+        else:
+            return header_content
 
     @property
     def body(self) -> str:
