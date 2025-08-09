@@ -1,6 +1,6 @@
 [project]
 name = "maildeck"
-version = "0.1.4"
+version = "0.1.5"
 description = "Import emails into Nextcloud Deck"
 authors = [
     { name = "Mathis Wiehl (@fahrradflucht)", email = "mail-pypi@mathiswiehl.de" }
