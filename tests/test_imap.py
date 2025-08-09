@@ -26,7 +26,6 @@ def build_email_bytes(
                 content, maintype=maintype, subtype=subtype, filename=fname
             )
         if include_plain_attachment:
-            # This is a text/plain attachment; current implementation may misclassify due to a typo
             msg.add_attachment(
                 b"ATTACHMENT TEXT",
                 maintype="text",
@@ -78,6 +77,26 @@ class TestImap(unittest.TestCase):
         )
         email_obj = Email(id="4", mailbox="INBOX", data=raw)
         self.assertEqual(email_obj.body.strip(), "Original body")
+
+    def test_html_only_body_with_text_plain_attachment_not_treated_as_body(self):
+        msg = EmailMessage()
+        msg["From"] = "sender@example.com"
+        msg["To"] = "rcpt@example.com"
+        msg["Subject"] = "S"
+        # Only HTML body (no text/plain body part)
+        msg.set_content("<p>HTML only</p>", subtype="html")
+        # Add a text/plain attachment
+        msg.add_attachment(
+            b"ATTACHMENT TEXT",
+            maintype="text",
+            subtype="plain",
+            filename="a.txt",
+        )
+
+        raw = msg.as_bytes()
+        email_obj = Email(id="html-1", mailbox="INBOX", data=raw)
+        # Expect empty body because there is no text/plain body part
+        self.assertEqual(email_obj.body, "")
 
     def test_get_inbox_mails_yields_email_objects(self):
         # Prepare a simple message

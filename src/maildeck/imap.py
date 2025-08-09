@@ -39,8 +39,11 @@ class Email:
                 if content_type != "text/plain":
                     continue
 
-                content_disposition = str(part.get("Content-Disposition"))
-                if "atttachment" in content_disposition:
+                content_disposition = part.get("Content-Disposition")
+                if (
+                    content_disposition
+                    and "attachment" in str(content_disposition).lower()
+                ):
                     continue
 
                 charset = part.get_content_charset()
@@ -62,8 +65,11 @@ class Email:
             return
 
         for part in self.message.walk():
-            content_disposition = part.get("Content-Disposition", None)
-            if content_disposition is None or "attachment" not in content_disposition:
+            content_disposition = part.get("Content-Disposition")
+            if (
+                not content_disposition
+                or "attachment" not in str(content_disposition).lower()
+            ):
                 continue
 
             yield EmailAttachment(
