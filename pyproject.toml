@@ -21,6 +21,9 @@ build-backend = "hatchling.build"
 managed = true
 dev-dependencies = []
 
+[tool.rye.scripts]
+test = "python -m unittest discover -s tests -p 'test_*.py' -v"
+
 [tool.hatch.metadata]
 allow-direct-references = true
 
