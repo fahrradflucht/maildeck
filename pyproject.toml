@@ -19,10 +19,14 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = []
+dev-dependencies = [
+    "ruff>=0.12.8",
+]
 
 [tool.rye.scripts]
 test = "python -m unittest discover -s tests -p 'test_*.py' -v"
+format = "ruff format ."
+lint = "ruff check ."
 
 [tool.hatch.metadata]
 allow-direct-references = true
