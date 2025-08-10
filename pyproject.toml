@@ -21,6 +21,7 @@ build-backend = "hatchling.build"
 managed = true
 dev-dependencies = [
     "ruff>=0.12.8",
+    "pre-commit>=4.3.0",
 ]
 
 [tool.rye.scripts]

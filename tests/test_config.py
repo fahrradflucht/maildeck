@@ -1,5 +1,7 @@
 import os
+import sys
 import unittest
+from io import StringIO
 from unittest.mock import patch
 
 from maildeck.config import Config
@@ -67,8 +69,10 @@ class TestConfig(unittest.TestCase):
         self.assertIsNone(cfg.nextcloud_stack_id)
 
     def test_missing_required_args_raises_system_exit(self):
-        with self.assertRaises(SystemExit):
-            Config.from_args([])
+        captured_stderr = StringIO()
+        with patch("sys.stderr", captured_stderr):
+            with self.assertRaises(SystemExit):
+                Config.from_args([])
 
 
 if __name__ == "__main__":
